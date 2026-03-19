@@ -4,7 +4,7 @@ ME405 Final Project
 Task (Obstacle Course)
 
 Hardware
-  Romi
+- Romi
   Sensors
   Communication Modules (ESP32)
   Custom Hardware (3D Prints)
