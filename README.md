@@ -36,7 +36,7 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | Pin | Function | Description | Cable |
 |-----|--------|------------|--------|
 | **NUCLEO Power IN** ||||
-| Vin | Vin Power IN | VSW (battery voltage after switch), VSW_nom = 9V | Nucleo Power Cable [Red] |
+| Vin | Vin Power IN | VSW (battery voltage after switch), VSW_nom = 8.4V | Nucleo Power Cable [Red] |
 | GND | GND | Connected to Power Distribution Board GND | Nucleo Power Cable [Black] |
 | **RIGHT Motor Control** ||||
 | PA_0 | PWM2/1 Input | RIGHT motor encoder CH.A | Encoder Cable [Blue] |
