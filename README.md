@@ -5,12 +5,12 @@ Task (Obstacle Course)
 
 Hardware
 - Romi
-  Sensors
-  Communication Modules (ESP32)
-  Custom Hardware (3D Prints)
+- Sensors
+- Communication Modules (ESP32)
+- Custom Hardware (3D Prints)
 
 Software
-  Drivers
-  Shares
-  Tasks
-  UI (Real Time Course Tracking)
+- Drivers
+- Shares
+- Tasks
+- UI (Real Time Course Tracking)
