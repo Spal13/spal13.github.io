@@ -40,28 +40,24 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | **NUCLEO Power IN** ||||
 | Vin | Vin Power IN | VSW (battery voltage after switch), VSW_nom = 9V | Nucleo Power Cable [Red] |
 | GND | GND | Connected to Power Distribution Board GND | Nucleo Power Cable [Black] |
-
 | **RIGHT Motor Control** ||||
 | PA_0 | PWM2/1 Input | RIGHT motor encoder CH.A | Encoder Cable [Blue] |
 | PA_1 | PWM2/2 Input | RIGHT motor encoder CH.B | Encoder Cable [Yellow] |
 | PB_5 | GPIO Output | RIGHT motor direction (0 = FWD; 1 = REV) | Motor Control Cable [Blue] |
 | PB_3 | GPIO Output | RIGHT motor SLEEP (0 = Sleep; 1 = Enabled) | Motor Control Cable [Yellow] |
 | PA_10 | PWM1/3 Output | RIGHT motor PWM (effort) | Motor Control Cable [Green] |
-
 | **LEFT Motor Control** ||||
 | PA_6 | PWM3/1 Input | LEFT motor encoder CH.A | Encoder Cable [Blue] |
 | PA_7 | PWM3/2 Input | LEFT motor encoder CH.B | Encoder Cable [Yellow] |
 | PC_7 | GPIO Output | LEFT motor direction (0 = FWD; 1 = REV) | Motor Control Cable [Blue] |
 | PA_9 | GPIO Output | LEFT motor SLEEP (0 = Sleep; 1 = Enabled) | Motor Control Cable [Yellow] |
 | PA_8 | PWM1/1 Output | LEFT motor PWM (effort) | Motor Control Cable [Green] |
-
 | **IMU BNO055** ||||
 | 5V | 5V Power OUT | Vin to IMU (5V nominal) | IMU Cable [Red] |
 | GND | GND | GND to IMU | IMU Cable [Black] |
 | PB_11 | I2C1_SDA | IMU I2C Data | IMU Cable [Yellow] |
 | PB_10 | I2C1_SCL | IMU I2C Clock | IMU Cable [Blue] |
 | PC_10 | GPIO Output | IMU Reset (0 = RST; 1 = nRST) | IMU Cable [Green] |
-
 | **Line Sensor** ||||
 | 3V3 | 3V3 Power OUT | Vin to Line Sensor | Line Sensor Cable [Orange] |
 | GND | GND | GND to Line Sensor | Line Sensor Cable [Brown] |
@@ -74,19 +70,16 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | PC_3 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
 | PC_2 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
 | PC_5 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
-
 | **Bump Sensors (x2)** ||||
 | 3V3 | 3V3 Power OUT | Pulled-up supply to bump sensors | Bump Sensor Cable [White] |
 | GND | GND | GND to bump sensors | Bump Sensor Cable [Black] |
 | PC_4 | GPIO Input | Left bump (Active LO) | Bump Sensor Cable [Purple] |
 | PH_0 | GPIO Input | Right bump (Active LO) | Bump Sensor Cable [Orange] |
-
 | **ESP32 (WiFi Module)** ||||
 | 3V3 | 3V3 Power OUT | Vin to ESP32 | ESP32 Cable [White] |
 | GND | GND | GND to ESP32 | ESP32 Cable [Grey] |
 | PC_12 | Serial_TX | RX2 (ESP32) | ESP32 Cable [White] |
 | PD_2 | Serial_RX | TX2 (ESP32) | ESP32 Cable [Purple] |
-
 | **VSENSE_BAT** ||||
 | PB_1 | AnalogIn | Battery voltage sense (via divider) | Custom Cable |
 
