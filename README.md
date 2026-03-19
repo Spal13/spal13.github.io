@@ -13,8 +13,9 @@ The main hardware used was the Romi robot. The Romi robot is a differential driv
 #### IMU
 #### Bump Sensors
 
-### Embedded System
+### Control System
 #### STM32 w/ Shoe of Brian
+### Communication System
 #### Communication Module (ESP32)
 
 ### Custom 3D Prints
