@@ -33,8 +33,6 @@ Custom hardware was 3D printed to allow for the bump sensors to be placed infron
 ### NUCELO Pinout
 Below, a table is shown documenting our final pinout of the NUCLEO board to all of the Romi sensors and motors, including power distribution and I/O
 
-# NUCLEO-L476RG Pinout Documentation
-
 | Pin | Function | Description | Cable |
 |-----|--------|------------|--------|
 | **NUCLEO Power IN** ||||
