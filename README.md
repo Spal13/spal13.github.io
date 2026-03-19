@@ -19,13 +19,14 @@ The system uses snap-action SPDT mechanical switches as bump sensors to detect c
 
 ### Control System
 #### STM32 w/ Shoe of Brian
+The system is controlled using an STM32 Nucleo-L476RG microcontroller running MicroPython. The Nucleo interfaces with all sensors and actuators (motors) and executes the main control logic. 
+
+A Shoe of Brian board was used as an interface when working with MicroPython, allowing us to upload micropython program files such as main scripts, drivers, and task files.
 ### Communication System
 #### Communication Module (ESP32)
 
 ### Custom 3D Prints
-In addition to the Romi, sensors were added to generate more data about its surroundings, orientation in addition to the movement data generated my the encoders. 
-- Communication Modules (ESP32)
-- Custom Hardware (3D Prints)
+Custom hardware was 3D printed to allow for the bump sensors to be placed infront of the Romi without interfering with the line sensor. The custom mount was also given a "C" shape to be able to securely move solo cups around the obstacle course for bonus points; although this feature was never utilized as we did not attempt to move any cups.
 
 ## Software
 - Language
