@@ -17,7 +17,8 @@ The system uses a BNO055 inertial measurement unit, which integrates a 3-axis ac
 #### Bump Sensors
 The system uses snap-action SPDT mechanical switches as bump sensors to detect collisions with obstacles. Each switch is connected with an external pull up resistor that we integrated into the cable/harness of each bump sensor, creating an active low digital input to the microcontroller. Two sensors (left and right) were placed in the front of Romi and was used to detect which side of the robot encountered an obstacle. When the switch is pressed, the input is pulled low, indicating the Romi has bumped into an obstacle. 
 #### Battery Sensing
-We included sensing of the battery voltage to display the SOC of our batteries as well as generate a GAIN scaler that we could apply to our motor gains as the batteries discharged. Because the battery voltage was larger than the maximum input voltage of 3.3V, a voltage divider was used to scale down the voltage from a maximum voltage of approximately 9V to approximately 2.93V 
+We included sensing of the battery voltage to display the SOC of our batteries as well as generate a GAIN scaler that we could apply to our motor gains as the batteries discharged. The gain scaler was never implemented.
+Because the battery voltage was larger than the maximum input voltage of 3.3V, a voltage divider was used to scale down the voltage from a maximum voltage of approximately 9V to approximately 2.93V.
 
 ### Control System
 #### STM32 w/ Shoe of Brian
@@ -31,6 +32,67 @@ A Shoe of Brian board was used as an interface when working with MicroPython, al
 Custom hardware was 3D printed to allow for the bump sensors to be placed infront of the Romi without interfering with the line sensor. The custom mount was also given a "C" shape to be able to securely move solo cups around the obstacle course for bonus points; although this feature was never utilized as we did not attempt to move any cups.
 ### NUCELO Pinout
 Below, a table is shown documenting our final pinout of the NUCLEO board to all of the Romi sensors and motors, including power distribution and I/O
+
+NUCLEO-L476RG Pinout Documentation			
+Pin	Function	Description	Cable [color]
+NUCLEO Power IN			
+Vin	Vin Power IN	This is VSW (battey voltage after the switch) from the Power Distribution Board. VSW_nom = 9V	Nucleo Power Cable [Red]
+GND	GND	Connected to GND of the Power Distribution Board.	Nucleo Power Cable [Black]
+			
+RIGHT Motor Control			
+PA_0	PWM2/1 Input	RIGHT motor encoder CH.A	Encoder Cable [Blue]
+PA_1	PWM2/2 Input	RIGHT motor encoder CH.B	Encoder Cable [Yellow]
+			
+PB_5	GPIO Output	RIGHT motor direction (0 = FWD; 1 = REV)	Motor Control Cable [Blue]
+PB_3	GPIO Output	RIGHT motor SLEEP (0 = Sleep/Coast; 1 = active/enabled)	Motor Control Cable [Yellow]
+PA_10	PWM1/3 Output	RIGHT motor PWM (effort)	Motor Control Cable [Green]
+			
+LEFT Motor Control			
+PA_6	PWM3/1 Input	LEFT motor encoder CH.A	Encoder Cable [Blue]
+PA_7	PWM3/2 Input	LEFT motor encoder CH.B	Encoder Cable [Yellow]
+			
+PC_7	GPIO Output	LEFT motor direction (0 = FWD; 1 = REV)	Motor Control Cable [Blue]
+PA_9	GPIO Output	LEFT motor SLEEP (0 = Sleep/Coast; 1 = active/enabled)	Motor Control Cable [Yellow]
+PA_8	PWM1/1 Output	LEFT motor PWM (effort)	Motor Control Cable [Green]
+			
+IMU BNO005			
+5V	5V Power OUT	Vin to the IMU. Vin_nom = 5V	IMU Cable [Red]
+GND	GND	GND to the IMU	IMU Cable [Black]
+			
+PB_11	I2C1_SDA	IMU BNO005 I2C Data Pin	IMU Cable [Yellow]
+PB_10	I2C1_SCL	IMU BNO005 I2C Clock Pin	IMU Cable [Blue]
+PC_10	GPIO Output	IMU BNO005 Reset Pin (0 = RST; 1 = nRST)	IMU Cable [Green]
+			
+Line Sensor			
+3V3	3V3 Power OUT	Vin to the Line Sensor	Line Sensor Cable [Orange]
+GND	GND	GND to Line Sensor	Line Sensor Cable [Brown]
+			
+PA_0	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PA_1	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PA_2	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PA_3	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PA_4	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PA_5	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PC_3	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PC_2	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+PC_5	AnalogIn	Reflectance Sensor analog input to Romi	Line Sensor Cable [Brown]
+			
+Bump Sensors (x2)			
+3V3 (from Line Sensor)	3V3 Power OUT	3V3 to the Bump Sensor (externally pulled up)	Bump Sensor Cable [White]
+GND (From Line Sensor)	GND	GND to the Bump Sessor 	Bump Sensor Cable [Black]
+			
+PC_4	GPIO Input	Left Bump sensor input to Romi (Active LO)	Bump Sensor Cable [Purple]
+PH_0	GPIO Input	Right Bump sensor input to Romi (Active LO)	Bump Sensor Cable [Orange]
+			
+ESP32 w/ WiFi			
+3V3	3V3 Power OUT	Vin to ESP32	ESP32 Cable [White]
+GND	GND	GND to ESP32	ESP32 Cable [Grey]
+			
+PC_12	Serial_Tx	Rx2	ESP32 Cable [White]
+PD_2	Serial_Rx	Tx2	ESP32 Cable [Purple]
+			
+VSENSE_BAT			
+PB_1	AnalogIn	VSense of Battery Voltage	Custom cable w/ integrated V divider 
 
 ## Software
 - Language
