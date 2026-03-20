@@ -102,7 +102,7 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 
 
 <p align="center">
-  <img src="ROMI.JPG" width="750"><br>
+  <img src="ROMI.JPG" width="500"><br>
   <em>Final Romi Assembly</em>
 </p>
 
