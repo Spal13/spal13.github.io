@@ -25,6 +25,9 @@ The system uses snap-action SPDT mechanical switches as bump sensors to detect c
 
 ![Romi Robot](BUMP_SENSORS.JPG)
 
+<img src="NAVIGATION_FSM" alt="Project Screenshot" width="400" />
+
+
 #### Battery Sensing
 We included sensing of the battery voltage to display the SOC of our batteries as well as generate a GAIN scaler that we could apply to our motor gains as the batteries discharged. The gain scaler was never implemented.
 Because the battery voltage was larger than the maximum input voltage of 3.3V, a voltage divider was used to scale down the voltage from a maximum voltage of approximately 9V to approximately 2.93V.
