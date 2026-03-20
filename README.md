@@ -96,6 +96,8 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 
 ![Romi Robot](ESTIMATOR_FSM.png)
 
+![Romi Robot](NAVIGATION_FSM.png)
+
 - Language
 - Drivers
 - Shares
