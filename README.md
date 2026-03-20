@@ -1,17 +1,15 @@
 # ME405 Final Project Report
-This page will go over our groups hardware and software solution to complete the final obstacle course using our Romi Robot. 
-
-The goal of this final project was to have the Romi complete an obstacle course. The obstacle course included line following, bump sensing, and location estimation challenges. To complete this task, our team relied on sensor data from hardware and algorithms implemented in software. This page will review our final design and implementation.  
+This repository presents our final hardware and software for enabling a Romi robot to autonomously complete an obstacle course. This obstacle course required line following, bump sensing, and location estimation, all achieved through integrated sensor data and control algorithms. Additionally, we developed a real-time user interface which wirelessly displayed Romi's location and associated data. This document summarizes our system design and implementation.
 
 ## Hardware
 ### Romi
-The main hardware used was the Romi robot. The Romi robot is a differential drive robot with two DC motor powered wheels. It uses 70 mm diameter wheels and has a chassis diameter of about 165 mm. The Romi utilized a power distribution & motor driver combination PCB. The DC motors were integrated with quadrature encoders and operated via PWM. The Romi operated off of AA batteries in a 6S configuration (6 AA batteries in parallel), outputting approximately 8.4V nominally. 
+The Pololu Romi robot is the main hardware used in this project. Romi is a differential drive robot with two wheels powered by DC motors. It uses 70 mm diameter wheels and has a chassis diameter of 165 mm. Romi utilized a power distribution & motor driver combination PCB. The DC motors were integrated with quadrature encoders and operated via PWM. Romi operated off of rechargeable AA batteries in a 6S configuration (6 AA batteries in series), outputting approximately 7.2V nominally. 
 
 ### Sensors
 #### Encoders
-The Romi uses quadrature incremental encoders attached to the motors to measure wheel rotation. These encoders generate two digital signals that are offset in phase, allowing both the amount of rotation and the direction of motion to be determined. In this project, the STM32 timer hardware was used in encoder mode to read the pulses efficiently. The encoder counts were then used to track wheel position, and the change in counts over time was used to calculate wheel velocity.
+The Romi uses two quadrature incremental encoders attached to the motors to measure wheel rotation. These encoders generate two digital signals that are offset in phase, allowing both the amount of rotation and the direction of motion to be determined. In this project, the STM32 timer hardware was used in encoder mode to read the pulses efficiently. The encoder counts were then used to track wheel position, and the change in counts over time was used to calculate wheel velocity.
 #### Line Sensor
-The line sensor used was a QTRX-MD-13A analog reflectance sensor array with 13 sensors spaced at 8 mm pitch, though only 9 sensors were used in this project. The board was powered from a 3.3V supply from the STM32 NUCLEO board. Each sensor on this array output analog voltages based on surface reflectivity. These analog readings were calibrated and used to generate a centroid value, which provided an estimate of the line position for line following.
+The line sensor used was a QTRX-MD-13A analog IR reflectance sensor array with 13 sensors spaced at 8 mm pitch, though only the center 9 sensors were used in this project. The board was powered from the 3.3V rail on the STM32 NUCLEO board. Each sensor on this array output analog voltages based on surface reflectivity. These analog readings were calibrated and used to generate a centroid value, which provided an estimate of the line position for line following.
 
 <p align="center">
   <img src="IR_SENSOR.png" width="300"><br>
@@ -36,19 +34,21 @@ The system uses snap-action SPDT mechanical switches as bump sensors to detect c
 
 
 #### Battery Sensing
-We included sensing of the battery voltage to display the SOC of our batteries as well as generate a GAIN scaler that we could apply to our motor gains as the batteries discharged. The gain scaler was never implemented.
+We included sensing of the battery voltage to display the SOC of our batteries as well as generate a scaler value that we could apply to our motor gains as the batteries discharged. The gain scaler was never implemented.
 Because the battery voltage was larger than the maximum input voltage of 3.3V, a voltage divider was used to scale down the voltage from a maximum voltage of approximately 9V to approximately 2.93V.
 
 ### Control System
-#### STM32 w/ Shoe of Brian
+#### STM32 & Shoe of Brian
 The system is controlled using an STM32 Nucleo-L476RG microcontroller running MicroPython. The Nucleo interfaces with all sensors and actuators (motors) and executes the main control logic. 
 
 A Shoe of Brian board was used as an interface when working with MicroPython, allowing us to upload micropython program files such as main scripts, drivers, and task files.
 ### Communication System
 #### Communication Module (ESP32)
+Two ESP32 modules were used to implement a transparent serial bridge between the STM32 and a laptop. The ESP32 on Romi relayed data between UART4 and ESP-Now (a wireless communication protocal), transmitting received serial data wirelessly and forwarding incoming wireless data to the STM32. The second ESP32, connected via USB, performed a similar role, bridging wireless communication to the laptop over USB.
 
 ### Custom 3D Prints
-Custom hardware was 3D printed to allow for the bump sensors to be placed infront of the Romi without interfering with the line sensor. The custom mount was also given a "C" shape to be able to securely move solo cups around the obstacle course for bonus points; although this feature was never utilized as we did not attempt to move any cups.
+Custom hardware was 3D printed to allow for the bump sensors to be placed in front of Romi without interfering with the line sensor. The custom mount was also given a "C" shape to be able to securely move solo cups around the obstacle course for bonus points. Unfortunately, this feature was never utilized as we did not attempt to move any cups.
+
 ### NUCELO Pinout
 Below, a table is shown documenting our final pinout of the NUCLEO board to all of the Romi sensors and motors, including power distribution and I/O
 
@@ -107,17 +107,23 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 </p>
 
 ## Software
+A major focus of our software development was building robust, easy-to-use drivers so the higher-level tasks could stay simple. The goal was a “plug-and-play” system, where each driver exposed clean interfaces and handled the low-level complexity internally. This allowed our main tasks to focus on behavior rather than implementation details. In the end, only two tasks were needed: Estimator and Navigator. A task diagram is presented below.
 
 <p align="center">
   <img src="TASK_DIAGRAM.png" width="750"><br>
   <em>System Task Diagram</em>
 </p>
 
+### Estimator
 <p align="center">
   <img src="ESTIMATOR_FSM.png" width="750"><br>
   <em>Estimator Task Finite State Machine</em>
 </p>
 
+Estimator is responsible for continuously tracking Romi’s position and heading using encoder data. While we initially considered incorporating the IMU, we found the encoders alone provided sufficient accuracy. Over roughly 15 full-course test runs using only line, bump, and encoder data, we achieved a maximum final position error of about 50 mm, typically staying within 25 mm.
+Estimator operates in three states: initialization, homing, and running. The initialization state [S0] runs once at startup to load IMU calibration data and perform setup, then transitions to homing. The homing state [S1] resets Romi’s reference position and heading, and can be triggered from the UI by pressing “h” to quickly restart a trial without rebooting. The running state [S2] executes every 20 ms, reading encoder values to compute heading from wheel arc lengths, then using Euler integration to update global X and Y position. This state continuously shares position and heading data with Navigator through the use of xShare, yShare, and yawShare.
+
+### Navigator
 <p align="center">
   <img src="NAVIGATOR_FSM.png" width="2000"><br>
   <em>Navigator Task Finite State Machine</em>
