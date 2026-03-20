@@ -100,6 +100,11 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | **VSENSE_BAT** ||||
 | PB_1 | AnalogIn | Battery voltage sense (via divider) | Custom Cable |
 
+<p align="center">
+  <img src="ROMI.JPG" width="750"><br>
+  <em>System Task Diagram</em>
+</p>
+
 ## Software
 
 <p align="center">
