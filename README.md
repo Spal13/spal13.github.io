@@ -91,6 +91,9 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | PB_1 | AnalogIn | Battery voltage sense (via divider) | Custom Cable |
 
 ## Software
+
+![Romi Robot](TASK_DIAGRAM.png)
+
 - Language
 - Drivers
 - Shares
