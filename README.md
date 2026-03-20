@@ -113,7 +113,7 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 </p>
 
 <p align="center">
-  <img src="NAVIGATOR_FSM.png" width="1250"><br>
+  <img src="NAVIGATOR_FSM.png" width="2000"><br>
   <em>Navigator Task Finite State Machine</em>
 </p>
 
