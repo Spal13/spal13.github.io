@@ -25,7 +25,7 @@ The system uses snap-action SPDT mechanical switches as bump sensors to detect c
 
 ![Romi Robot](BUMP_SENSORS.JPG)
 
-<img src="BUMP_SENSORS.JPG" alt="BUMP SENSORS" width="400" />
+<img src="BUMP_SENSORS.JPG" alt="BUMP SENSORS" width="200" />
 
 
 #### Battery Sensing
