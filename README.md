@@ -101,8 +101,8 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | PB_1 | AnalogIn | Battery voltage sense (via divider) | Custom Cable |
 
 <p align="center">
-  <img src="ROMI.JPG" width="750"><br>
-  <em>System Task Diagram</em>
+  <img src="ROMI.JPG" width="300"><br>
+  <em>Final Romi Assembly</em>
 </p>
 
 ## Software
