@@ -103,17 +103,17 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 ## Software
 
 <p align="center">
-  <img src="TASK_DIAGRAM.png" width="600"><br>
+  <img src="TASK_DIAGRAM.png" width="750"><br>
   <em>System Task Diagram</em>
 </p>
 
 <p align="center">
-  <img src="ESTIMATOR_FSM.png" width="600"><br>
+  <img src="ESTIMATOR_FSM.png" width="750"><br>
   <em>Estimator Task Finite State Machine</em>
 </p>
 
 <p align="center">
-  <img src="NAVIGATOR_FSM.png" width="700"><br>
+  <img src="NAVIGATOR_FSM.png" width="1000"><br>
   <em>Navigator Task Finite State Machine</em>
 </p>
 
