@@ -16,6 +16,7 @@ The line sensor used was a QTRX-MD-13A analog reflectance sensor array with 13 s
   <img src="images/IP_SENSOR.png" width="500"><br>
   <em>Line Sensor Array (QTRX-MD-13A)</em>
 </p>
+
 #### IMU
 The system uses a BNO055 inertial measurement unit, which integrates a 3-axis accelerometer, gyroscope, and magnetometer. The sensor operates over I2C and performs onboard sensor fusion to provide orientation data directly as Euler angles (roll, pitch, and yaw). The IMU also provides angular velocity measurements from the gyroscope. The main data captured from the IMU was the YAW of the Romi for navigation control without using the line sensor. 
 ![Romi Robot](IMU_SENSOR.png)
