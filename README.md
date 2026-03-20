@@ -13,22 +13,25 @@ The Romi uses quadrature incremental encoders attached to the motors to measure 
 #### Line Sensor
 The line sensor used was a QTRX-MD-13A analog reflectance sensor array with 13 sensors spaced at 8 mm pitch, though only 9 sensors were used in this project. The board was powered from a 3.3V supply from the STM32 NUCLEO board. Each sensor on this array output analog voltages based on surface reflectivity. These analog readings were calibrated and used to generate a centroid value, which provided an estimate of the line position for line following.
 
-![Romi Robot](IR_SENSOR.png)
+<p align="center">
+  <img src="IR_SENSOR.png" width="300"><br>
+  <em>Line Sensor (QTRX-MD-13A)</em>
+</p>
 
 #### IMU
 The system uses a BNO055 inertial measurement unit, which integrates a 3-axis accelerometer, gyroscope, and magnetometer. The sensor operates over I2C and performs onboard sensor fusion to provide orientation data directly as Euler angles (roll, pitch, and yaw). The IMU also provides angular velocity measurements from the gyroscope. The main data captured from the IMU was the YAW of the Romi for navigation control without using the line sensor. 
 
-![Romi Robot](IMU_SENSOR.png)
+<p align="center">
+  <img src="IMU_SENSOR.png" width="300"><br>
+  <em>BNO055 IMU Sensor</em>
+</p>
 
 #### Bump Sensors
 The system uses snap-action SPDT mechanical switches as bump sensors to detect collisions with obstacles. Each switch is connected with an external pull up resistor that we integrated into the cable/harness of each bump sensor, creating an active low digital input to the microcontroller. Two sensors (left and right) were placed in the front of Romi and was used to detect which side of the robot encountered an obstacle. When the switch is pressed, the input is pulled low, indicating the Romi has bumped into an obstacle. 
 
-![Romi Robot](BUMP_SENSORS.JPG)
-
 <p align="center">
-  <img src="BUMP_SENSORS.JPG" width="200">
-  <br>
-  <em>Bump Sensors</em>
+  <img src="BUMP_SENSORS.JPG" width="300"><br>
+  <em>Bump Sensors (Left and Right)</em>
 </p>
 
 
@@ -99,11 +102,20 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 
 ## Software
 
-![Romi Robot](TASK_DIAGRAM.png)
+<p align="center">
+  <img src="TASK_DIAGRAM.png" width="600"><br>
+  <em>System Task Diagram</em>
+</p>
 
-![Romi Robot](ESTIMATOR_FSM.png)
+<p align="center">
+  <img src="ESTIMATOR_FSM.png" width="600"><br>
+  <em>Estimator Task Finite State Machine</em>
+</p>
 
-![Romi Robot](NAVIGATOR_FSM.png)
+<p align="center">
+  <img src="NAVIGATOR_FSM.png" width="700"><br>
+  <em>Navigator Task Finite State Machine</em>
+</p>
 
 - Language
 - Drivers
