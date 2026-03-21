@@ -3,6 +3,8 @@ This repository presents our final hardware and software for enabling a Romi rob
 
 The full repository can be found [here](https://github.com/Spal13/spal13.github.io).
 
+A video of this project in action can be found [here](https://drive.google.com/file/d/19B1MOBspGuQugUwJ9CemePyic-vluhUs/view?usp=sharing).
+
 ## Hardware
 ### Romi
 The Pololu Romi robot is the main hardware used in this project. Romi is a differential drive robot with two wheels powered by DC motors. It uses 70 mm diameter wheels and has a chassis diameter of 165 mm. Romi utilized a power distribution & motor driver combination PCB. The DC motors were integrated with quadrature encoders and operated via PWM. Romi operated off of rechargeable AA batteries in a 6S configuration (6 AA batteries in series), outputting approximately 7.2V nominally. 
