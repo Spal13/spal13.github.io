@@ -84,9 +84,9 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | PA_3 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
 | PA_4 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
 | PA_5 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
-| PC_3 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
-| PC_2 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
-| PC_5 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
+| PC_6 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
+| PC_7 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
+| PC_8 | AnalogIn | Reflectance Sensor Input | Line Sensor Cable [Brown] |
 | **Bump Sensors (x2)** ||||
 | 3V3 | 3V3 Power OUT | Pulled-up supply to bump sensors | Bump Sensor Cable [White] |
 | GND | GND | GND to bump sensors | Bump Sensor Cable [Black] |
@@ -100,6 +100,11 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 | **VSENSE_BAT** ||||
 | PB_1 | AnalogIn | Battery voltage sense (via divider) | Custom Cable |
 
+
+<p align="center">
+  <img src="media/wiring.png" width="500"><br>
+  <em>Wiring Diagram</em>
+</p>
 
 <p align="center">
   <img src="media/ROMI.JPG" width="500"><br>
