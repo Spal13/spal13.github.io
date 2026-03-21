@@ -121,13 +121,65 @@ A major focus of our software development was building robust, easy-to-use drive
 </p>
 
 Estimator is responsible for continuously tracking Romi’s position and heading using encoder data. While we initially considered incorporating the IMU, we found the encoders alone provided sufficient accuracy. Over roughly 15 full-course test runs using only line, bump, and encoder data, we achieved a maximum final position error of about 50 mm, typically staying within 25 mm.
-Estimator operates in three states: initialization, homing, and running. The initialization state [S0] runs once at startup to load IMU calibration data and perform setup, then transitions to homing. The homing state [S1] resets Romi’s reference position and heading, and can be triggered from the UI by pressing “h” to quickly restart a trial without rebooting. The running state [S2] executes every 20 ms, reading encoder values to compute heading from wheel arc lengths, then using Euler integration to update global X and Y position. This state continuously shares position and heading data with Navigator through the use of xShare, yShare, and yawShare.
+Estimator operates in three states: initialization, homing, and running. The initialization state [S0] runs once at startup to load IMU calibration data and perform setup, then transitions to homing. The homing state [S1] resets Romi’s reference position and heading, and can be triggered from the UI by pressing “h” to quickly restart a trial without rebooting. The running state [S2] executes every 20 ms, reading encoder values to compute heading from wheel arc lengths, then using Euler integration to update global X and Y position (equations below). This state continuously shares position and heading data with Navigator through the use of xShare, yShare, and yawShare. 
+
+$$
+x_{new} = x_{current} + \cos(\psi)\, v_{avg}\, \Delta t
+$$
+$$
+x_{new} = x_{current} + \sin(\psi)\, v_{avg}\, \Delta t
+$$
+$$
+\psi = $\frac{1}{140mm}$ * (s_{r}\ - s_{l}\)
+$$
 
 ### Navigator
 <p align="center">
   <img src="NAVIGATOR_FSM.png" width="2000"><br>
   <em>Navigator Task Finite State Machine</em>
 </p>
+
+The Navigator task is the meat of our codebase. It is responsible for running different code at each stage of the course. We will admit that in a perfect world we would have moved our waypoint navigation logic to its own driver in order to maximize readability and efficiency of the code, as it is a commonly reused item. It is composed of 12 states.
+
+S0 - Initialization
+This state waits until the robot has been homed and is ready to run. Once that happens, it resets the controllers, zeroes the encoders, enables the motors, initializes Romi’s starting pose. It then waits for the user to send the start command via the user interface to begin the course.
+
+S1 - Initial line following
+Here, Romi follows the line using the IR sensor centroid value and a line-following PID controller. The speed setpoint is adjusted based on X position in order to ramp up near the beginning and ramp down near the curve at the end. Since our Y position is nearly exactly 800mm throughout the entire straight segment, we keep our yShare updated with that information until we reach the turn. Once we have turned at least 65 degrees, we change to waypoint following.
+
+S2 - Waypoints through the parking garage
+In this state Romi tracks a generated constant-velocity trajectory made up of a quarter-circle followed by a straight line segment. We use the error between Romi’s current position and the desired position to set Romi’s velocity, and the error between Romi’s current heading and desired heading (a straight line from the current location to the target location) to set the differential velocity of the wheels. The greatest challenge of developing this state was working with the atan2(y,x) function to find the heading error. Once either bump sensor is triggered from the wall at the end of the parking garage, Romi moves to the next state.
+
+S3 - Back away from the wall
+After detecting contact, Romi briefly drives backward by 10mm. This creates space between the cup catcher and the obstacle before starting the next maneuver.
+
+S4 - Turn in place
+In this state, Romi rotates 70º downwards to face the new line segment. We use open-loop control to keep the code simple. Because of this we command a turn of less than 90º to account for slight overshoot. Once the turn is complete, the motor and line controllers are reset so Romi can cleanly re-enter line following mode.
+
+S5 - Line following out of the parking garage
+Romi resumes line following using the same technique as before and continues driving until it reaches Y = 125mm.
+
+S6 - Turn to enter the slalom section
+This is another in-place turn. Romi rotates until it reaches the heading needed to enter the next part of the course, then stops, and resets the control loops before continuing. We also update the line following PID driver with slightly more aggressive gains, which we found improved performance on the tight curves. 
+
+S7 - Line following through the slalom curves
+This state again reuses the typical line following code, although with more aggressive gains and a slower setpoint as compared to the straight line section. Once the estimated position indicates Romi has cleared this region, it transitions back to waypoint control.
+
+S8 - Waypoints from CP3 to CP4
+We discovered that since our estimator provided excellent position data, we could rely on that instead of line following to get from CP3 to CP4. This resulted in higher performance without the need for relying on a sensor which could malfunction. The trajectory here is composed of a large 180º turn and a straight line segment which closely follows the black line on the board. We use the same control logic as in the parking garage, but now with a slightly faster setpoint. Once we reach or overshoot CP4, we move to turning around.
+
+S9 - Turn toward the final path
+This state performs another heading adjustment in place. Once Romi spins about 180º counter-clockwise, the controllers are reset and the next timed waypoint path begins.
+
+S10 - Final waypoint-following path
+Romi follows another generated trajectory, made up of a quarter circle followed by a straight segment to start/end point. This guides Romi through the final portion of the course until its estimated y-position exceeds 800mm.
+
+S11 - Final heading alignment
+Once Romi reaches the start/end point, it performs one last turn to align to the final heading. After that, both motors are stopped, the run end time is recorded and sent over serial, and the task moves to its finished state.
+
+S12 - Finished state
+This is the final state. The motors turn off, and Romi waits for serial commands.
+
 
 - Language
 - Drivers
