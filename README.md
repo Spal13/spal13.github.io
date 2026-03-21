@@ -12,7 +12,7 @@ The Romi uses two quadrature incremental encoders attached to the motors to meas
 The line sensor used was a QTRX-MD-13A analog IR reflectance sensor array with 13 sensors spaced at 8 mm pitch, though only the center 9 sensors were used in this project. The board was powered from the 3.3V rail on the STM32 NUCLEO board. Each sensor on this array output analog voltages based on surface reflectivity. These analog readings were calibrated and used to generate a centroid value, which provided an estimate of the line position for line following.
 
 <p align="center">
-  <img src="media/IR_SENSOR.png" width="300"><br>
+  <img src="/media/IR_SENSOR.png" width="300"><br>
   <em>Line Sensor (QTRX-MD-13A)</em>
 </p>
 
@@ -20,7 +20,7 @@ The line sensor used was a QTRX-MD-13A analog IR reflectance sensor array with 1
 The system uses a BNO055 inertial measurement unit, which integrates a 3-axis accelerometer, gyroscope, and magnetometer. The sensor operates over I2C and performs onboard sensor fusion to provide orientation data directly as Euler angles (roll, pitch, and yaw). The IMU also provides angular velocity measurements from the gyroscope. The main data captured from the IMU was the YAW of the Romi for navigation control without using the line sensor. 
 
 <p align="center">
-  <img src="media/IMU_SENSOR.png" width="300"><br>
+  <img src="/media/IMU_SENSOR.png" width="300"><br>
   <em>BNO055 IMU Sensor</em>
 </p>
 
@@ -28,7 +28,7 @@ The system uses a BNO055 inertial measurement unit, which integrates a 3-axis ac
 The system uses snap-action SPDT mechanical switches as bump sensors to detect collisions with obstacles. Each switch is connected with an external pull up resistor that we integrated into the cable/harness of each bump sensor, creating an active low digital input to the microcontroller. Two sensors (left and right) were placed in the front of Romi and was used to detect which side of the robot encountered an obstacle. When the switch is pressed, the input is pulled low, indicating the Romi has bumped into an obstacle. 
 
 <p align="center">
-  <img src="media/BUMP_SENSORS.JPG" width="300"><br>
+  <img src="/media/BUMP_SENSORS.JPG" width="300"><br>
   <em>Bump Sensors (Left and Right)</em>
 </p>
 
@@ -102,12 +102,12 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 
 
 <p align="center">
-  <img src="media/wiring.png" width="500"><br>
+  <img src="/media/wiring.png" width="500"><br>
   <em>Wiring Diagram</em>
 </p>
 
 <p align="center">
-  <img src="media/ROMI.JPG" width="500"><br>
+  <img src="/media/ROMI.JPG" width="500"><br>
   <em>Final Romi Assembly</em>
 </p>
 
@@ -115,13 +115,13 @@ Below, a table is shown documenting our final pinout of the NUCLEO board to all 
 A major focus of our software development was building robust, easy-to-use drivers so the higher-level tasks could stay simple. The goal was a “plug-and-play” system, where each driver exposed clean interfaces and handled the low-level complexity internally. This allowed our main tasks to focus on behavior rather than implementation details. In the end, only two tasks were needed: Estimator and Navigator. A task diagram is presented below.
 
 <p align="center">
-  <img src="media/TASK_DIAGRAM.png" width="750"><br>
+  <img src="/media/TASK_DIAGRAM.png" width="750"><br>
   <em>System Task Diagram</em>
 </p>
 
 ### Estimator
 <p align="center">
-  <img src="media/ESTIMATOR_FSM.png" width="750"><br>
+  <img src="/media/ESTIMATOR_FSM.png" width="750"><br>
   <em>Estimator Task Finite State Machine</em>
 </p>
 
@@ -140,7 +140,7 @@ $$
 
 ### Navigator
 <p align="center">
-  <img src="media/NAVIGATOR_FSM.png" width="2000"><br>
+  <img src="/media/NAVIGATOR_FSM.png" width="2000"><br>
   <em>Navigator Task Finite State Machine</em>
 </p>
 
@@ -192,13 +192,12 @@ This is the final state. The motors turn off, and Romi waits for serial commands
 
 ### User interface
 <p align="center">
-  <img src="media/UI.png" width="750"><br>
+  <img src="/media/UI.png" width="750"><br>
   <em>Estimator Task Finite State Machine</em>
 </p>
 
 Although not required for class, we developed a real-time wireless user interface to observe pertinent information regarding Romi and send commands using keystrokes. Processing is a language designed for creating interactive visual displays. We used it to read data from the serial input and render Romi’s live position and heading on the game board. It also displays the target position as a blue dot and current line sensor data in grayscale at the bottom. Being able to visually see what Romi sees and thinks allowed us to very quickly solve issues and visualize how different setpoints and trajectories would move it through the game board. Homing and running commands are sent via “h” and “r” keystrokes, accordingly. In the future we would love to expand this program to be a fully fledged user interface with menus for settings gains, drawing trajectories, and more.
 
 
-- wiring diagram
 - Drivers
 
