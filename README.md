@@ -189,7 +189,21 @@ This is the final state. The motors turn off, and Romi waits for serial commands
 
 ### Drivers
 
+Our battery driver reads the raw voltage from the voltage divider and calculates the true battery voltage. Assuming a linear discharge curve (which certainly isn’t perfect), we can calculate the state of charge of the battery. We can also calculate how much to increase the motor controller gains in order to standardize performance across battery levels.
 
+Our bump sensor driver reads the bump sensor pins and provides software debouncing. This driver can be polled to read these sensors.
+
+Our control driver implements a PID controller so we can easily implement closed loop control in many different instances. Gains are set via set_kp, set_ki, and set_kd methods. The controller needs to be regularly updated via the update() function, which returns the new PID output.
+
+Our encoder driver reads a quadrature encoder and returns its current position or velocity in mm or mm/s, respectively. Wheel diameter is hardcoded into this driver as we never expect different Romi wheel sizes to be used.
+
+Our IMU diver contains a variety of helper functions to write and read from the various BNO055 I2C registers. The getAngle() and getAngleRate() functions return the current euler angles and euler angle rates in radians and radians per second, respectively.
+
+Our IR sensor driver reads the IR sensors consecutively and returns the centroid of the black line. It also provides various helper functions such as calibration and uncertainty calculation. The calibration functions store white and black ranges for each sensor individually, and the uncertainty calculation can help us avoid driving away if we are unsure that a line is detected.
+
+Our motor driver sets the effort and direction of a brushed motor. It also returns the estimated voltage applied to the motor in order to help during our state estimator lab.
+
+Our serial driver provides an extremely simple interface to send key-value pairs over serial to the ESP32.
 
 
 ### User interface
