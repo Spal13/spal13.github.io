@@ -201,5 +201,5 @@ This is the final state. The motors turn off, and Romi waits for serial commands
 Although not required for class, we developed a real-time wireless user interface to observe pertinent information regarding Romi and send commands using keystrokes. Processing is a language designed for creating interactive visual displays. We used it to read data from the serial input and render Romi’s live position and heading on the game board. It also displays the target position as a blue dot and current line sensor data in grayscale at the bottom. Being able to visually see what Romi sees and thinks allowed us to very quickly solve issues and visualize how different setpoints and trajectories would move it through the game board. Homing and running commands are sent via “h” and “r” keystrokes, accordingly. In the future we would love to expand this program to be a fully fledged user interface with menus for settings gains, drawing trajectories, and more.
 
 
-- Drivers
-
+## Conclusion
+We learned a ton about software design, hardware interfaces, microcontrollers, kinematics, and teamwork through this project. If we were to continue this project we would start reorganizing the codebase to be more readable. Right now we have a lot of reused code in our navigator task which could be simplified into its own driver. We would also rely more on waypoints and trajectory generation as we are very happy with our position/heading estimator. We are very happy to see our Romi reliably and quickly completing the course and hope to use our knowledge across many future projects!
